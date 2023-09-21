@@ -11,12 +11,14 @@ dt = 1.0/float(fs) # 刻み幅.
 t = dt
 i = 0
 x=[]
-omega=2.0*math.pi*2.0
+omega1=2.0*np.pi*20.0
+omega2=2.0*np.pi*50.0
+
 
 # 計測データの作成.
 time = input("計測時間")
 while t<=float(time):
-    x.append(5*np.cos(0.2*omega*t)+2*np.cos(omega*t)+np.cos(3*omega*t))
+    x.append(10*np.sin(omega1*t)+5*np.sin(omega2*t))
     t += dt
     i+=1
 
@@ -44,7 +46,8 @@ plt.savefig("image/source/"+name+".png") # 作成したグラフの保存先.
 plt.show() # グラフの表示.
 df.to_csv(filename) # 作成したデータフレームをcsvで保存.
 
-result = DFT(x) # 元データをdftする.
+window = np.hanning(len(x))
+result = DFT(x*window) # 元データをdftする.
 print(result) # dftの表示.
 
 
@@ -58,8 +61,9 @@ ax.set_xlabel("frequecy [Hz]") # 横軸ラベル
 
 Amp = np.abs(result/(max(np.abs(result)))) #規格化.
 freq = np.arange(0,float(fs),float(fs)/len(x)) # 横軸の決定
+# plt.xticks(np.arange(0,float(fs),float(fs)*7/len(x)))
 ax.plot(freq,Amp,color="k") # プロット
-ax.set_xlim(0,float(fs)/2) # 横軸の領域の決定
+ax.set_xlim(90,120) # 横軸の領域の決定
 plt.savefig("image/dft/"+name+".png") # ファイル保存先
 
 plt.show() # グラフ表示
