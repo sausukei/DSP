@@ -45,9 +45,6 @@ def skipMove(f,N):
         a_minus_1 = f[i - k:i] #0からk番目までの値を全て取得
         calc = float(a+sum(a_minus_1)/N) 
         z.append(calc)
-    
-    
-
     return z
 
 
