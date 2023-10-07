@@ -20,6 +20,15 @@ y0 = 0
 # Ki = int(input("Ki "))
 # Kd = int(input("Kd "))
 
+fig, ax = plt.subplots()
+ax.set_xlabel("Time [s]")
+ax.set_ylabel("Amplitude")
+ax.grid()
+ax.legend()
+plt.savefig("widow.png")
+plt.show()
+
+
 print(t)
 
 
