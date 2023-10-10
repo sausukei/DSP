@@ -7,22 +7,51 @@ omegan = 2.0/100.0
 zeta = 2.0/100.0
 
 rt = 1
+RT=[]
 dt = 2.5
-t = np.arange(-1.0*dt,25.0*dt,dt)
-y = []
+t = np.arange(0,25.0*dt+dt,dt)
+y = [0,]
 u = []
 e = []
+E = [0]
+
+
+# Kp = float(input("Kp "))
+# Ki = float(input("Ki "))
+# Kd = float(input("Kd "))
+
+Kp = 0.01
+Ki = 0.00005
+Kd = 40
+
+for i in range(len(t)):
+    print(i)
+    e.append(rt-y[i])
+
+    RT.append(1)
+    E.append(E[i-1]+e[i-1]*dt)
+    calcU=Kp*e[i]+Ki*(E[i-1]+dt*e[i])+Kd*((e[i]-e[i-1])/dt)
+    u.append(calcU)
+    calcY=(omegan**2*u[i]+y[i]*((2/dt**2)+(2*zeta*omegan/dt))-(1/dt**2)*y[i-1])/((1/(dt**2))+(2*zeta*omegan/dt)+(omegan**2))
+    y.append(calcY)
+
+        
+
+t = np.append(t,1)
+RT.append(0)
+e.append(0)
+u.append(0)
 
 y0 = 0
 
+print(len(t),len(RT),len(e),len(u),len(y),len(E))
+df = pd.DataFrame({"t":t,"r(t)":RT,"e(t)":e,"u(t)":u,"y(t)":y,"E(t)":E})
 
-# Kp = int(input("Kp "))
-# Ki = int(input("Ki "))
-# Kd = int(input("Kd "))
+df.to_csv("PID.csv")
 
 fig, ax = plt.subplots()
-ax.set_xlabel("Time [s]")
-ax.set_ylabel("Amplitude")
+# ax.set_xlabel("Time [s]")
+# ax.set_ylabel("Amplitude")
 ax.grid()
 ax.legend()
 plt.savefig("widow.png")
