@@ -9,11 +9,11 @@ zeta = 2.0/100.0
 rt = float(1)
 RT=[]
 dt = 2.5
-t = np.arange(0,25.0*dt+dt,dt)
-y = [0]
-u = []
+t = np.arange(-1*dt,25.0*dt+dt,dt)
+y = [0,0]
+u = [0,]
 e = [1]
-E = [0]
+E = [0,0]
 
 
 # Kp = float(input("Kp "))
@@ -41,6 +41,9 @@ for i in range(len(t)):
         
 
 t = np.append(t,1)
+t = np.append(t,1)
+e.append(0)
+RT.append(0)
 RT.append(0)
 
 u.append(0)
@@ -58,7 +61,7 @@ fig, ax = plt.subplots()
 ax.grid()
 ax.legend()
 plt.savefig("widow.png")
-plt.show()
+
 
 
 print(t)
