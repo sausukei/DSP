@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 omegan = 2.0/100.0
 zeta = 2.0/100.0
 
-rt = 1
+rt = float(1)
 RT=[]
 dt = 2.5
 t = np.arange(0,25.0*dt+dt,dt)
-y = [0,]
+y = [0]
 u = []
-e = []
+e = [1]
 E = [0]
 
 
@@ -29,17 +29,20 @@ for i in range(len(t)):
     e.append(rt-y[i])
 
     RT.append(1)
-    E.append(E[i-1]+e[i-1]*dt)
-    calcU=Kp*e[i]+Ki*(E[i-1]+dt*e[i])+Kd*((e[i]-e[i-1])/dt)
+
+    E.append(E[i]+e[i-1]*dt)
+    calcU=(Kp*e[i])+(Ki*(E[i-1]+dt*e[i]))+(Kd*((e[i]-e[i-1])/dt))
     u.append(calcU)
-    calcY=(omegan**2*u[i]+y[i]*((2/dt**2)+(2*zeta*omegan/dt))-(1/dt**2)*y[i-1])/((1/(dt**2))+(2*zeta*omegan/dt)+(omegan**2))
+    Ymol = (omegan*omegan*u[i]+y[i]*((2/dt*dt)+(2*zeta*omegan/dt))-(1/dt*dt)*y[i-1])
+    Yden = ((1/(dt*dt))+(2*zeta*omegan/dt)+(omegan*omegan))
+    calcY= float(Ymol/Yden)
     y.append(calcY)
 
         
 
 t = np.append(t,1)
 RT.append(0)
-e.append(0)
+
 u.append(0)
 
 y0 = 0
